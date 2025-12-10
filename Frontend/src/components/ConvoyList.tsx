@@ -7,13 +7,14 @@ export type ConvoyListProps = {
   loading?: boolean;
   selectedId?: string;
   onSelect: (convoy: Convoy) => void;
+  onCreateConvoy?: () => void;
 };
 
 const SkeletonCard = () => (
   <div className="skeleton-pulse h-32 w-full rounded-xl bg-panelNight/40" />
 );
 
-export const ConvoyList = ({ convoys, loading, selectedId, onSelect }: ConvoyListProps) => {
+export const ConvoyList = ({ convoys, loading, selectedId, onSelect, onCreateConvoy }: ConvoyListProps) => {
   const [search, setSearch] = useState('');
 
   const filteredConvoys = useMemo(() => {
@@ -56,12 +57,15 @@ export const ConvoyList = ({ convoys, loading, selectedId, onSelect }: ConvoyLis
           <div className="mb-4 text-4xl">🛰️</div>
           <p className="text-sm font-semibold text-textNeutral">No convoys match the filter.</p>
           <p className="mt-1 text-xs text-textNeutral/60">Adjust filters or create a new convoy to see activity here.</p>
-          <button
-            type="button"
-            className="mt-4 rounded-full bg-amberCommand px-4 py-2 text-xs font-semibold text-black"
-          >
-            Create Convoy
-          </button>
+          {onCreateConvoy && (
+            <button
+              type="button"
+              onClick={onCreateConvoy}
+              className="mt-4 rounded-full bg-amberCommand px-4 py-2 text-xs font-semibold text-black hover:bg-amberCommand/90 transition"
+            >
+              Create Convoy
+            </button>
+          )}
         </div>
       ) : (
         <div className="scrollbar-stealth flex max-h-[60vh] flex-col gap-3 overflow-y-auto pr-1">

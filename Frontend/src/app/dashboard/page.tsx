@@ -147,11 +147,12 @@ const fetchConvoys = async () => {
 const DashboardPage = () => {
   const { data: apiConvoys, isLoading, mutate, error } = useSWR<Convoy[]>('/api/convoys', fetchConvoys, {
     refreshInterval: 15000,
-    fallbackData: DEMO_CONVOYS,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
   });
 
   // Use API data if available, otherwise use demo data
-  const convoys = apiConvoys && apiConvoys.length > 0 ? apiConvoys : DEMO_CONVOYS;
+  const convoys = apiConvoys || DEMO_CONVOYS;
 
   const pathname = usePathname();
   const [selectedConvoy, setSelectedConvoy] = useState<Convoy | null>(null);
@@ -305,18 +306,67 @@ const DashboardPage = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    setToasts((prev) => [
-      ...prev,
-      {
-        id: `convoy-created-${Date.now()}`,
-        title: 'Convoy created',
-        description: `New convoy ${formData.get('name')} has been created successfully`,
-        tone: 'success',
-      },
-    ]);
+    try {
+      const newConvoyData = {
+        name: formData.get('name') as string,
+        priority: formData.get('priority') as Convoy['priority'],
+        vehicleCount: parseInt(formData.get('vehicleCount') as string),
+        speedKmph: parseInt(formData.get('speedKmph') as string),
+        origin: {
+          lat: parseFloat(formData.get('originLat') as string),
+          lng: parseFloat(formData.get('originLng') as string),
+          name: 'Origin',
+        },
+        destination: {
+          lat: parseFloat(formData.get('destLat') as string),
+          lng: parseFloat(formData.get('destLng') as string),
+          name: 'Destination',
+        },
+        status: 'PLANNED' as Convoy['status'],
+      };
 
-    setCreateConvoyOpen(false);
-    await mutate();
+      const response = await fetch('/api/convoys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newConvoyData),
+      });
+
+      if (response.ok) {
+        const createdConvoy = await response.json();
+        
+        // Close modal first for better UX
+        setCreateConvoyOpen(false);
+        
+        // Show success toast
+        setToasts((prev) => [
+          ...prev,
+          {
+            id: `convoy-created-${Date.now()}`,
+            title: 'Convoy created',
+            description: `New convoy ${createdConvoy.name} has been created successfully`,
+            tone: 'success',
+          },
+        ]);
+        
+        // Force immediate refresh of convoy list
+        await mutate();
+        
+        // Optionally select the newly created convoy
+        setSelectedConvoy(createdConvoy);
+      } else {
+        throw new Error('Failed to create convoy');
+      }
+    } catch (error) {
+      setToasts((prev) => [
+        ...prev,
+        {
+          id: `convoy-error-${Date.now()}`,
+          title: 'Error',
+          description: 'Failed to create convoy. Please try again.',
+          tone: 'error',
+        },
+      ]);
+    }
   };
 
   const dismissToast = (id: string) => setToasts((prev) => prev.filter((toast) => toast.id !== id));
@@ -353,7 +403,7 @@ const DashboardPage = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-amberCommand">HawkRoute</h1>
-              <p className="text-[10px] uppercase tracking-wider text-textNeutral/60">AI Convoy Command</p>
+              <p className="text-[10px] uppercase tracking-wider text-textNeutral/60">Convoy Command</p>
             </div>
           </div>
 
@@ -394,6 +444,7 @@ const DashboardPage = () => {
             loading={isLoading}
             selectedId={selectedConvoy?.id}
             onSelect={(convoy) => setSelectedConvoy(convoy)}
+            onCreateConvoy={() => setCreateConvoyOpen(true)}
           />
         </div>
 

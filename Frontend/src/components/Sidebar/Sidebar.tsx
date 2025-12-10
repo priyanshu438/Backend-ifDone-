@@ -13,9 +13,10 @@ export type SidebarProps = {
   loading?: boolean;
   selectedId?: string;
   onSelect: (convoy: Convoy) => void;
+  onCreateConvoy?: () => void;
 };
 
-export const Sidebar = ({ convoys, loading, selectedId, onSelect }: SidebarProps) => {
+export const Sidebar = ({ convoys, loading, selectedId, onSelect, onCreateConvoy }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const [priorityFilter, setPriorityFilter] = useState<Priority[]>([]);
   const [statusFilter, setStatusFilter] = useState<ConvoyStatus[]>([]);
@@ -57,7 +58,7 @@ export const Sidebar = ({ convoys, loading, selectedId, onSelect }: SidebarProps
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-textNeutral/60">AICC</p>
             <p className="text-lg font-semibold text-textNeutral">Convoy Directory</p>
-            <p className="text-xs text-textNeutral/60">Live logistics picture</p>
+            <p className="text-xs text-textNeutral/60">Live Logistics Illustration</p>
           </div>
         )}
 
@@ -113,6 +114,7 @@ export const Sidebar = ({ convoys, loading, selectedId, onSelect }: SidebarProps
             loading={loading}
             selectedId={selectedId}
             onSelect={onSelect}
+            onCreateConvoy={onCreateConvoy}
           />
         </div>
       </div>

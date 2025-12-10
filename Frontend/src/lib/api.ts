@@ -2,12 +2,14 @@ import type { Convoy } from '@/types/convoy';
 import type { OperationEvent } from '@/types/event';
 import type { Route } from '@/types/route';
 
-// Backend API base URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+// Backend API base URL - empty string means use Next.js API routes
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 export const fetcher = async <T>(input: RequestInfo, init?: RequestInit): Promise<T> => {
-  // Prepend API base URL if relative path
-  const url = typeof input === 'string' && input.startsWith('/') 
+  // For Next.js API routes, use relative paths as-is
+  const url = typeof input === 'string' && input.startsWith('/api/') 
+    ? input 
+    : typeof input === 'string' && input.startsWith('/') 
     ? `${API_BASE_URL}${input}` 
     : input;
 
