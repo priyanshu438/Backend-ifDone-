@@ -1,0 +1,158 @@
+[
+  {
+    "id": "1",
+    "name": "ALPHA-HAWK-01",
+    "origin": {
+      "lat": 34.08,
+      "lng": 74.79,
+      "name": "Srinagar"
+    },
+    "destination": {
+      "lat": 34.16,
+      "lng": 77.58,
+      "name": "Leh"
+    },
+    "currentPosition": {
+      "lat": 34.08,
+      "lng": 74.79
+    },
+    "speedKmph": 45,
+    "priority": "ALPHA",
+    "vehicleCount": 25,
+    "unitType": "ARMY",
+    "status": "EN_ROUTE",
+    "lastUpdated": "2025-12-10T18:54:37.012Z",
+    "etaHours": 12,
+    "assignedRoute": {
+      "id": "route-1",
+      "name": "Srinagar-Leh Highway",
+      "polyline": [[74.79, 34.08], [75.46, 34.27], [75.63, 34.24], [77.58, 34.16]],
+      "etaHours": 12,
+      "distanceKm": 434,
+      "riskScore": 45,
+      "segments": [
+        {
+          "id": "seg-1-0",
+          "coordinates": [[74.79, 34.08], [75.46, 34.27]],
+          "terrain": "MOUNTAIN",
+          "difficulty": "HIGH",
+          "recommendedSpeedKmph": 35,
+          "riskLevel": 0.6,
+          "status": "CLEAR"
+        }
+      ],
+      "checkpoints": [
+        {
+          "id": "cp-1",
+          "name": "Zoji La Pass",
+          "status": "PENDING",
+          "eta": "2025-12-10T22:54:37.013Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "2",
+    "name": "BRAVO-SUPPLY-12",
+    "origin": {
+      "lat": 27.31,
+      "lng": 88.6,
+      "name": "Gangtok"
+    },
+    "destination": {
+      "lat": 27.39,
+      "lng": 88.84,
+      "name": "Nathu La"
+    },
+    "currentPosition": {
+      "lat": 27.31,
+      "lng": 88.6
+    },
+    "speedKmph": 40,
+    "priority": "BRAVO",
+    "vehicleCount": 18,
+    "unitType": "SUPPLY",
+    "status": "EN_ROUTE",
+    "lastUpdated": "2025-12-10T18:54:37.013Z",
+    "etaHours": 3,
+    "assignedRoute": {
+      "id": "route-2",
+      "name": "Gangtok-Nathu La Route",
+      "polyline": [[88.6, 27.31], [88.72, 27.35], [88.84, 27.39]],
+      "etaHours": 3,
+      "distanceKm": 56,
+      "riskScore": 52,
+      "segments": [
+        {
+          "id": "seg-2-0",
+          "coordinates": [[88.6, 27.31], [88.84, 27.39]],
+          "terrain": "MOUNTAIN",
+          "difficulty": "HIGH",
+          "recommendedSpeedKmph": 30,
+          "riskLevel": 0.7,
+          "status": "CLEAR"
+        }
+      ],
+      "checkpoints": [
+        {
+          "id": "cp-2",
+          "name": "Nathu La Border",
+          "status": "PENDING",
+          "eta": "2025-12-10T21:54:37.013Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "3",
+    "name": "CHARLIE-MED-08",
+    "origin": {
+      "lat": 26.19,
+      "lng": 91.75,
+      "name": "Tezpur"
+    },
+    "destination": {
+      "lat": 27.58,
+      "lng": 91.92,
+      "name": "Tawang"
+    },
+    "currentPosition": {
+      "lat": 26.19,
+      "lng": 91.75
+    },
+    "speedKmph": 50,
+    "priority": "CHARLIE",
+    "vehicleCount": 12,
+    "unitType": "MEDICAL",
+    "status": "PLANNED",
+    "lastUpdated": "2025-12-10T18:54:37.013Z",
+    "etaHours": 8,
+    "assignedRoute": {
+      "id": "route-3",
+      "name": "Tezpur-Tawang Highway",
+      "polyline": [[91.75, 26.19], [91.82, 26.89], [92.07, 27.35], [91.92, 27.58]],
+      "etaHours": 8,
+      "distanceKm": 350,
+      "riskScore": 28,
+      "segments": [
+        {
+          "id": "seg-3-0",
+          "coordinates": [[91.75, 26.19], [91.92, 27.58]],
+          "terrain": "MOUNTAIN",
+          "difficulty": "MEDIUM",
+          "recommendedSpeedKmph": 60,
+          "riskLevel": 0.3,
+          "status": "CLEAR"
+        }
+      ],
+      "checkpoints": [
+        {
+          "id": "cp-3",
+          "name": "Sela Pass",
+          "status": "PENDING",
+          "eta": "2025-12-11T00:54:37.013Z"
+        }
+      ]
+    }
+  }
+]
